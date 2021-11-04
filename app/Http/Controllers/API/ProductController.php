@@ -32,7 +32,7 @@ class ProductController extends Controller
             'selling_price'=>"required|max:20",
             'original_price'=>"required|max:20",
             'quantity'=>"required|max:4",
-            'image'=>"required|image|mimes:jpeg,png,jpg|dimensions:ratio=1/1",
+            'image'=>"required|image|mimes:jpeg,png,jpg|dimensions:ratio=3/4",
         ]);
 
         if ($validator->fails()) {
