@@ -77,11 +77,19 @@ class FrontendController extends Controller
 
     // Mobile
 
-    public function mobile()
+    public function count()
     {
-        $category = Category::where('slug','Mobile')->where('status','0')->first();
+        $category = Category::count();
+        return response()->json([
+                'status'=>200,
+                'categorycount'=>$category,
+            ]); 
+    }
+    public function mobile($id)
+    {
+        $category = Category::where('id',$id)->where('status','0')->first();
         if ($category) {
-            $product = Product::where('category_id','1')->where('status','0')->get();
+            $product = Product::where('category_id',$category->id)->where('status','0')->get();
             if($product){
                 return response()->json([
                     'status'=>200,
@@ -108,9 +116,9 @@ class FrontendController extends Controller
     }
     public function laptop()
     {
-        $category = Category::where('slug','Laptop')->where('status','0')->first();
+        $category = Category::where('slug','nature')->where('status','0')->first();
         if ($category) {
-            $product = Product::where('category_id','2')->where('status','0')->get();
+            $product = Product::where('category_id','3')->where('status','0')->get();
             if($product){
                 return response()->json([
                     'status'=>200,

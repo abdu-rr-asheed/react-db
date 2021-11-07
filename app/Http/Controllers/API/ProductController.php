@@ -32,7 +32,7 @@ class ProductController extends Controller
             'selling_price'=>"required|max:20",
             'original_price'=>"required|max:20",
             'quantity'=>"required|max:4",
-            'image'=>"required|image|mimes:jpeg,png,jpg|dimensions:ratio=1/1",
+            'image'=>"required|image|mimes:jpeg,png,jpg|dimensions:ratio=3/4",
         ]);
 
         if ($validator->fails()) {
@@ -43,38 +43,50 @@ class ProductController extends Controller
         }
         else{
 
-            $product = new Product;
-            $product->category_id = $request->input('category_id');
-            $product->slug = $request->input('slug');
-            $product->name = $request->input('name');
-            $product->description = $request->input('description');
+            $count = Product::take(6);
 
-            $product->meta_title = $request->input('meta_title');
-            $product->meta_keyword = $request->input('meta_keyword');
-            $product->meta_description = $request->input('meta_description');
+            if ($count) {
+                return response()->json([
+                'status'=>200,
+                'errors'=>$validator->messages(),
+            ]);
+            }
+            else {
 
-            $product->brand = $request->input('brand');
-            $product->selling_price = $request->input('selling_price');
-            $product->original_price = $request->input('original_price');
-            $product->quantity = $request->input('quantity');
-
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $extention = $file->getClientOriginalExtension();
-                $filename = time() .'.'.$extention;
-                $file->move('uploads/product/',$filename);
-                $product->image = 'uploads/product/'.$filename;
+                $product = new Product;
+                $product->category_id = $request->input('category_id');
+                $product->slug = $request->input('slug');
+                $product->name = $request->input('name');
+                $product->description = $request->input('description');
+    
+                $product->meta_title = $request->input('meta_title');
+                $product->meta_keyword = $request->input('meta_keyword');
+                $product->meta_description = $request->input('meta_description');
+    
+                $product->brand = $request->input('brand');
+                $product->selling_price = $request->input('selling_price');
+                $product->original_price = $request->input('original_price');
+                $product->quantity = $request->input('quantity');
+    
+                if ($request->hasFile('image')) {
+                    $file = $request->file('image');
+                    $extention = $file->getClientOriginalExtension();
+                    $filename = time() .'.'.$extention;
+                    $file->move('uploads/product/',$filename);
+                    $product->image = 'uploads/product/'.$filename;
+                }
+    
+                $product->featured = $request->input('featured');
+                $product->popular = $request->input('popular');
+                $product->status = $request->input('status');
+                $product->save();
+    
+                return response()->json([
+                    'status'=>200,
+                    'message'=>'Product Added Successfully',
+                ]);
             }
 
-            $product->featured = $request->input('featured');
-            $product->popular = $request->input('popular');
-            $product->status = $request->input('status');
-            $product->save();
-
-            return response()->json([
-                'status'=>200,
-                'message'=>'Product Added Successfully',
-            ]);
         }
 
     }
