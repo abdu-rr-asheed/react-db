@@ -43,16 +43,6 @@ class ProductController extends Controller
         }
         else{
 
-            $count = Product::take(6);
-
-            if ($count) {
-                return response()->json([
-                'status'=>200,
-                'errors'=>$validator->messages(),
-            ]);
-            }
-            else {
-
                 $product = new Product;
                 $product->category_id = $request->input('category_id');
                 $product->slug = $request->input('slug');
@@ -85,7 +75,6 @@ class ProductController extends Controller
                     'status'=>200,
                     'message'=>'Product Added Successfully',
                 ]);
-            }
 
         }
 
