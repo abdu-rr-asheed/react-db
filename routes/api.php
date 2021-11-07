@@ -23,9 +23,10 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::get('getCategory', [FrontendController::class, 'category']);
+Route::get('categoryCount', [FrontendController::class, 'count']);
 Route::get('fetchproduct/{slug}', [FrontendController::class, 'product']);
 Route::get('viewproductdetail/{category_slug}/{product_slug}', [FrontendController::class, 'viewproduct']);
-Route::get('mobile', [FrontendController::class, 'mobile']);
+Route::get('mobile/{id}', [FrontendController::class, 'mobile']);
 Route::get('laptop', [FrontendController::class, 'laptop']);
 
 Route::post('add-to-cart', [CartController::class, 'addtocart']);
