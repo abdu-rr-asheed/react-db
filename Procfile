@@ -1,1 +1,1 @@
-web: vandor/bin/heroku-php-apache2 
+web: vandor/bin/heroku-php-apache2 /
